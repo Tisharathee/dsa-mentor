@@ -6,7 +6,7 @@ from dsa_mentor import build_graph
  
 app = FastAPI(title="DSA Mentor API")
  
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*").split(",")
  
 app.add_middleware(
     CORSMiddleware,
