@@ -17,7 +17,7 @@ def get_llm(temperature=0.3):
     elif LLM_PROVIDER == "anthropic":
         from langchain_anthropic import ChatAnthropic
         return ChatAnthropic(
-            model="claude-sonnet-4-6",
+            model="claude-3-5-sonnet-latest",
             temperature=temperature,
             anthropic_api_key=os.getenv("ANTHROPIC_API_KEY"),
         )

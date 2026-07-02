@@ -1,4 +1,5 @@
 import os
+import re
 from typing import TypedDict, Literal
 from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
@@ -17,6 +18,8 @@ class MentorState(TypedDict):
     still_stuck: bool
  
 def understand_problem_node(state: MentorState) -> dict:
+    if state.get("problem_understanding"):
+        return {"problem_understanding": state["problem_understanding"]}
     llm = get_llm(temperature=0.2)
     prompt = f"""Restate the following DSA problem in your own plain words,
 in 2-3 sentences. Focus on: what input, what output, what's actually
@@ -52,15 +55,18 @@ EXPLANATION: <one sentence on why you classified it this way>
 """
     response = llm.invoke(prompt).content
  
+    match_type = re.search(r"GAP_TYPE:\s*\*?(\w+)\*?", response, re.IGNORECASE)
+    match_exp = re.search(r"EXPLANATION:\s*(.+)", response, re.IGNORECASE)
+ 
     gap_type = "no_attempt_yet"
     explanation = response
-    for line in response.split("\n"):
-        if line.startswith("GAP_TYPE:"):
-            candidate = line.replace("GAP_TYPE:", "").strip()
-            if candidate in GAP_TYPES:
-                gap_type = candidate
-        if line.startswith("EXPLANATION:"):
-            explanation = line.replace("EXPLANATION:", "").strip()
+ 
+    if match_type:
+        candidate = match_type.group(1).strip().lower()
+        if candidate in GAP_TYPES:
+            gap_type = candidate
+    if match_exp:
+        explanation = match_exp.group(1).strip().replace("**", "").replace("*", "")
  
     return {"gap_type": gap_type, "gap_explanation": explanation}
  
@@ -76,6 +82,15 @@ def generate_hint_node(state: MentorState) -> dict:
         specificity = "Explain step by step in plain English how to apply the technique. NEVER write actual code."
  
     prompt = f"""A student is stuck on a DSA problem.
+ 
+Problem:
+{state.get('problem_statement', '')}
+ 
+Our Understanding of the Problem:
+{state.get('problem_understanding', '')}
+ 
+Student's attempt:
+{state.get('user_attempt', '')}
  
 Gap diagnosis: {state['gap_type']} - {state['gap_explanation']}
  

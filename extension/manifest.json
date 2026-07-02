@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "DSA Mentor Companion",
+  "version": "1.0.0",
+  "description": "Graduated AI hints for LeetCode problems without giving away the solution.",
+  "permissions": [
+    "sidePanel",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/problems/*",
+    "https://*.leetcode.com/problems/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {},
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

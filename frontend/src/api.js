@@ -21,16 +21,12 @@ export async function startSession(problemStatement, userAttempt) {
 }
 
 export async function continueSession(state, newAttemptDetail) {
-  // We send back the full state the backend gave us last time, plus
-  // the new info, the same way the original CLI loop did:
-  // result["user_attempt"] = more_detail; result["still_stuck"] = True
   const res = await fetch(`${API_BASE}/continue`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      ...state,
+      state: state,
       user_attempt: newAttemptDetail,
-      still_stuck: true,
     }),
   })
   if (!res.ok) {

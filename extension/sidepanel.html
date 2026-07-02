@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSA Mentor Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>DSA Mentor</h1>
+      <p class="subtitle">AI-Powered Graduated Hinting</p>
+    </header>
+
+    <div id="error-box" class="error-box" style="display: none;"></div>
+
+    <!-- Setup View -->
+    <div id="setup-view" class="card">
+      <div class="sync-banner">
+        <p>Sync code and description directly from the LeetCode tab.</p>
+        <button id="sync-btn" class="sync-button">⚡ Sync from LeetCode</button>
+      </div>
+
+      <div class="form-group">
+        <label for="problem-statement">Problem Statement</label>
+        <textarea id="problem-statement" rows="5" placeholder="Problem statement will sync here..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="user-attempt">Your Code / Attempt</label>
+        <textarea id="user-attempt" rows="6" placeholder="Your code will sync here..."></textarea>
+      </div>
+
+      <button id="start-btn" class="primary-btn">Get a Hint</button>
+    </div>
+
+    <!-- Results View -->
+    <div id="results-view" class="card results" style="display: none;">
+      <div class="section">
+        <h3>Agent's understanding</h3>
+        <p id="res-understanding"></p>
+      </div>
+
+      <div class="section">
+        <h3>Diagnosis</h3>
+        <span id="res-badge" class="badge"></span>
+        <p id="res-explanation" class="gap-explanation"></p>
+      </div>
+
+      <div id="hint-section" class="section highlight">
+        <h3 id="res-hint-title">Hint #1</h3>
+        <p id="res-hint-body"></p>
+      </div>
+
+      <div class="followup">
+        <div class="form-group">
+          <label for="follow-up-input">Still stuck after this hint?</label>
+          <textarea id="follow-up-input" rows="3" placeholder="What did you try after the last hint?"></textarea>
+        </div>
+        <div class="button-row">
+          <button id="continue-btn" class="primary-btn">Get next hint</button>
+          <button id="reset-btn" class="secondary">Start New Problem</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+      <div class="spinner"></div>
+      <p id="loading-text">Analyzing your code...</p>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

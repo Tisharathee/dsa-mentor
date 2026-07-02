@@ -95,10 +95,13 @@ export default function App() {
       ) : (
         <div className="card results">
           <Section title="Agent's understanding" body={session.problem_understanding} />
-          <Section
-            title={`Diagnosis: ${session.gap_type}`}
-            body={session.gap_explanation}
-          />
+          <div className="section">
+            <h3>Diagnosis</h3>
+            <span className={`badge badge-${session.gap_type}`}>
+              {formatGapType(session.gap_type)}
+            </span>
+            <p className="gap-explanation">{session.gap_explanation}</p>
+          </div>
           <Section title={`Hint #${session.hint_count}`} body={session.hint} highlight />
 
           <div className="followup">
@@ -133,4 +136,16 @@ function Section({ title, body, highlight }) {
       <p>{body}</p>
     </div>
   )
+}
+
+const GAP_LABELS = {
+  wrong_approach: 'Wrong Approach',
+  missed_edge_case: 'Missed Edge Case',
+  complexity_issue: 'Complexity Issue',
+  syntax_or_implementation: 'Syntax / Implementation Error',
+  no_attempt_yet: 'No Attempt Yet',
+}
+
+function formatGapType(type) {
+  return GAP_LABELS[type] || type
 }
