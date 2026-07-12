@@ -3,7 +3,7 @@
 // Keeps App.jsx focused on UI/state, and means there's exactly ONE
 // place to change the backend URL or request shape later.
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://dsa-mentor-backend1.onrender.com'
 
 export async function startSession(problemStatement, userAttempt) {
   const res = await fetch(`${API_BASE}/start`, {

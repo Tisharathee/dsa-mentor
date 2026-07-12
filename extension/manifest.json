@@ -10,7 +10,8 @@
   ],
   "host_permissions": [
     "https://leetcode.com/problems/*",
-    "https://*.leetcode.com/problems/*"
+    "https://*.leetcode.com/problems/*",
+    "https://dsa-mentor-backend1.onrender.com/*"
   ],
   "background": {
     "service_worker": "background.js"
